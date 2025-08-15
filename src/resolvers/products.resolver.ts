@@ -231,14 +231,13 @@ export const resolvers = {
     },
     async uploadImage(_: any, args: { id: string; image: any }, context: any) {
       try {
+        validateApiKey(context);
         const { createReadStream, mimetype } = await args.image;
 
         if (mimetype !== "image/jpeg" && mimetype !== "image/png")
           throw new Conflict("The file is not an image");
 
         const uploadedImage = (await new Promise((resolve, reject) => {
-          validateApiKey(context);
-
           const stream = cloudinary.v2.uploader.upload_stream(
             { resource_type: "image", folder: "week-6" },
             (error, result) => {
