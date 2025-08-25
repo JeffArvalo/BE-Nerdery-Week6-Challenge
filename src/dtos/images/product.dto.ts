@@ -8,26 +8,25 @@ export class GetImageDto {
 
 export class CreateImageDto {
   @IsUUID()
-  @IsNotEmpty()
   @IsOptional()
-  id!: string;
+  readonly id!: string;
 
   @IsString()
   @IsNotEmpty()
-  name!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  productId!: string;
+  readonly name!: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  assetId!: string;
+  readonly productId!: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  path!: string;
+  readonly assetId!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
+  readonly path!: string;
 }

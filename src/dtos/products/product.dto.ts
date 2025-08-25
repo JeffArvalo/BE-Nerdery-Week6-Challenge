@@ -2,81 +2,72 @@ import { IsUUID, IsNotEmpty, IsString, IsNumber, IsOptional, IsBoolean, IsInt  }
 
 export class GetProductDto {
   @IsUUID()
-  @IsNotEmpty()
-  id!: string;
+  readonly id!: string;
 }
 
 export class CreateProductDto {
   @IsUUID()
-  @IsNotEmpty()
   @IsOptional()
-  id!: string;
+  readonly id!: string;
 
   @IsString()
   @IsNotEmpty()
-  name!: string;
+  readonly name!: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  description!: string;
+  readonly description!: string;
 
   @IsInt()
-  @IsNotEmpty()
-  stock!: number
+  readonly stock!: number
 
   @IsNumber({maxDecimalPlaces: 2})
-  @IsNotEmpty()
-  price!: number
+  readonly price!: number
 
   @IsBoolean()
   @IsOptional()
   isActive!: Boolean
 
   @IsUUID()
-  @IsNotEmpty()
   @IsOptional()
   clientId!: string;
 }
 
 export class UpdateProductDto {
   @IsUUID()
-  @IsNotEmpty()
   @IsOptional()
-  id!: string;
+  readonly id!: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  name!: string;
+  readonly name!: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  description!: string;
+  readonly description!: string;
 
   @IsInt()
-  @IsNotEmpty()
   @IsOptional()
-  stock!: number
+  readonly stock!: number
 
   @IsNumber({maxDecimalPlaces: 2})
-  @IsNotEmpty()
   @IsOptional()
-  price!: number
+  readonly price!: number
 
   @IsBoolean()
   @IsOptional()
-  isActive!: Boolean
+  readonly isActive!: Boolean
 
   @IsUUID()
   @IsNotEmpty()
   @IsOptional()
-  clientId!: string;
+  readonly clientId!: string;
 }
 
 export class DeleteProductDto {
   @IsUUID()
-  @IsNotEmpty()
-  id!: string;
+  readonly id!: string;
 }

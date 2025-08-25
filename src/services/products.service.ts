@@ -1,4 +1,8 @@
+import { Prisma } from "@prisma/client";
 import { GetImageDto } from "../dtos/images/product.dto";
+import { GraphQLError } from "graphql";
+import { Conflict } from "http-errors";
+
 import {
   CreateProductDto,
   UpdateProductDto,
@@ -13,7 +17,7 @@ export class ProductService {
   }
 
   static async getByIdAndClient(id: string, clientId: string) {
-    return prisma.product.findFirst({
+    return prisma.product.findUniqueOrThrow({
       where: { id, clientId },
     });
   }
@@ -29,8 +33,13 @@ export class ProductService {
           clientId,
         },
       });
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          throw new Conflict("Product already exists with this client.");
+        }
+      }
+      throw new GraphQLError(e.message);
     }
   }
 
@@ -50,8 +59,13 @@ export class ProductService {
           clientId,
         },
       });
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2025") {
+          throw new Conflict("Product not exists.");
+        }
+      }
+      throw new GraphQLError(e.message);
     }
   }
 
@@ -60,8 +74,13 @@ export class ProductService {
       return prisma.product.delete({
         where: { id, clientId },
       });
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2025") {
+          throw new Conflict("Product not exists.");
+        }
+      }
+      throw new GraphQLError(e.message);
     }
   }
 
@@ -77,8 +96,14 @@ export class ProductService {
           isActive,
         },
       });
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2025") {
+          throw new Conflict("Product not exists.");
+        }
+      }
+
+      throw new GraphQLError(e);
     }
   }
 }
@@ -105,8 +130,14 @@ export class ImageService {
           path: image.path,
         },
       });
-    } catch (e) {
-      throw e;
+    } catch (e: any) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          throw new Conflict("Product already exists with this client.");
+        }
+      }
+
+      throw new GraphQLError(e);
     }
   }
 }
