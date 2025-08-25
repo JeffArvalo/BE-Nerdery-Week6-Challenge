@@ -57,13 +57,27 @@ yarn install
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 ```
 
-### 4. Seed initial data
+### 4. Migrate Prisma schemas
+
+```bash
+npx prisma migrate dev
+```
+
+
+### 5. Generate Prisma schemas
+
+```bash
+npx prisma generate
+```
+
+
+### 6. Seed initial data
 
 ```bash
 npm run prisma:seed
 ```
 
-### 5. Start dev server
+### 7. Start dev server
 
 ```bash
 npm run dev
